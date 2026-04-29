@@ -148,18 +148,68 @@ ws.onmessage = (event) => {
 
 ## 2. Objetivos de la experiencia
 
-_Redactar: qué se quiere lograr con la experiencia interactiva — propósito general (educativo, artístico, lúdico, demostrativo), qué debe sentir o aprender el usuario al interactuar con la placa, y cuál es el resultado esperado al final del desarrollo._
+Quiero lograr una experiencia interactiva de ocio centrada en el entretenimiento. El objetivo es que el usuario se divierta durante un rato con un juego corto, dinámico y sencillo de entender, con respuestas inmediatas a los sensores del Arduino Esplora.
 
----Quiero lograr una experiencia interactiva de ocio (entretenimiento) que pueda divertir por un tiempo al usuario. La idea principal es que sea entretenido y que pueda liberar dopamina, y el resultado esperado es que sea un juego corto pero entretenido.
+El resultado esperado es una web app jugable que use el backend público de Arduino como fuente de datos en tiempo real y que entregue una experiencia arcade clara, rejugable y visualmente reconocible.
 
 ## 3. Público y contexto de uso
 
-_Redactar: quién va a usar la experiencia (edad, perfil, nivel técnico), en qué entorno físico ocurre (instalación, aula, evento, web pública), y si el usuario manipula el Arduino directamente o solo observa los datos._
+La experiencia está pensada principalmente para niños y adolescentes, aunque debe ser lo bastante simple para que cualquier persona pueda entenderla en pocos segundos.
 
----Preferiblemente niños y adolescentes, y puede ocurrir en algún lugar con acceso a Internet. El usuario manipularía el Arduino para moverse en el entorno e interactuar con el.
+El contexto de uso es una web pública accesible desde un navegador con Internet. El usuario manipula el Arduino Esplora físicamente para mover al personaje, provocar acciones y reaccionar ante la partida en tiempo real.
 
 ## 4. Idea creativa
 
-_Redactar: propuesta concreta de experiencia posible organizadas por sensor — por ejemplo, usar el acelerómetro para controlar ... algo, el micrófono para iniciar animaciones, el joystick para mover un personaje. Incluir referencias visuales._
+La experiencia será un juego arcade tipo Pac-Man sobre fondo negro.
 
----Un juego plataformero en el cual un dibujo tipo Pac-Man aparezca  en un fondo negro, y cada 10 segundos aparezca un fantasma en una posición aleatoria. Los fantasmas persiguen a Pac por toda la pantalla. También aparecerá una pastilla de poder cada 15 segundos la cual Pac come y puede comer a todos los fantasmas durante un tiempo de 10 segundos. Cada fantasma vale 100 puntos y se van sumando en el contador. Si un fantasma toca a Pac, se termina el juego y aparece el botón de reiniciar.
+El personaje principal será un Pac-Man controlado por el joystick. Cada 10 segundos aparecerá un fantasma en una posición aleatoria y comenzará a perseguir al jugador. Cada 15 segundos aparecerá una pastilla de poder; si Pac-Man la recoge, podrá comer fantasmas durante 10 segundos. Cada fantasma comido suma 100 puntos. Si un fantasma toca a Pac-Man cuando no está en modo poder, termina la partida y aparece un botón de reinicio.
+
+La referencia visual será la estética clásica de Pac-Man: personaje amarillo, fantasmas de colores y una interfaz minimalista, con el fondo negro para resaltar el contraste.
+
+### Mapeo de sensores
+
+| Sensor | Uso en la experiencia |
+|---|---|
+| `joystick.x` y `joystick.y` | Movimiento del personaje |
+| `microfono` | Entrada opcional para reforzar saltos, efectos o feedback sonoro visual |
+| `luz` | Ajuste de brillo o intensidad visual de la pantalla |
+| `acelerometro.z` | Efecto especial de zoom o pulso visual si hay un movimiento brusco |
+| `botones` | Acciones auxiliares como reiniciar o activar estados de prueba |
+
+## 5. Plan de desarrollo
+
+El desarrollo se hará como una web app cliente que consume el backend existente en https://arduino.arroyocreativa.com/ mediante WebSocket para tiempo real y REST como respaldo.
+
+### Fase 1: Base técnica
+
+- Definir el stack de la app y crear la estructura inicial del proyecto.
+- Montar la pantalla base, el canvas principal y la UI mínima.
+- Preparar la carga de assets (Pac-Man y fantasmas).
+
+### Fase 2: Integración con backend
+
+- Conectar la app al WebSocket del backend.
+- Implementar lectura de estado desde REST como fallback.
+- Mostrar el estado de conexión y manejo de reconexión.
+
+### Fase 3: Lógica del juego
+
+- Implementar movimiento de Pac-Man con el joystick.
+- Crear el sistema de aparición y persecución de fantasmas.
+- Añadir colisiones, puntuación, power-up y game over.
+
+### Fase 4: Presentación visual
+
+- Renderizar sprites, interfaz y efectos de poder.
+- Añadir animaciones de aparición, persecución y derrota.
+- Ajustar contraste, escala y legibilidad.
+
+### Fase 5: Pulido y validación
+
+- Probar sensibilidad de controles con el Arduino real.
+- Ajustar dificultad, velocidad y tiempos de spawn.
+- Verificar estabilidad con conexión real al backend.
+
+### Resultado final esperado
+
+Una experiencia web simple, divertida y corta, lista para jugar desde el navegador, con sensores del Arduino Esplora conectados al backend público y una jugabilidad clara basada en persecución, recolección de poder y puntuación.

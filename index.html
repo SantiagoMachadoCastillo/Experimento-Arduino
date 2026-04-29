@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pac Esplora</title>
+    <meta
+      name="description"
+      content="Juego estilo Pac-Man conectado al Arduino Esplora en tiempo real."
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <canvas id="game" aria-label="Juego Pac Esplora"></canvas>
+
+      <section class="hud" aria-live="polite">
+        <div class="hud-row hud-row--top">
+          <div class="status-group">
+            <span id="connectionStatus" class="badge badge--pending">Conectando</span>
+            <span id="transportStatus" class="meta">Esperando datos</span>
+          </div>
+          <div class="scoreboard">
+            <span class="score-label">Puntos</span>
+            <strong id="scoreValue">0</strong>
+          </div>
+        </div>
+
+        <div class="hud-row hud-row--bottom">
+          <div class="powerboard">
+            <span class="score-label">Power</span>
+            <strong id="powerValue">Normal</strong>
+          </div>
+          <div class="scoreboard scoreboard--compact">
+            <span class="score-label">Mejor</span>
+            <strong id="highScoreValue">0</strong>
+          </div>
+          <button id="restartButton" class="button button--ghost" type="button">
+            Reiniciar
+          </button>
+        </div>
+      </section>
+
+      <section id="overlay" class="overlay overlay--visible" aria-hidden="false">
+        <div class="panel">
+          <p class="eyebrow">Arduino Esplora</p>
+          <h1 id="overlayTitle">Pac Esplora</h1>
+          <p id="overlayMessage">
+            Mueve a Pac-Man con el joystick. También puedes usar las flechas del teclado como respaldo.
+          </p>
+          <div class="overlay-actions">
+            <button id="startButton" class="button button--primary" type="button">Jugar</button>
+          </div>
+          <ul class="hint-list">
+            <li>Joystick: mover al personaje</li>
+            <li>Micrófono: pulso visual opcional</li>
+            <li>Luz: ajusta el brillo</li>
+            <li>Movimiento brusco en Z: zoom temporal</li>
+          </ul>
+        </div>
+      </section>
+    </main>
+
+    <script type="module" src="./src/main.js"></script>
+  </body>
+</html>
